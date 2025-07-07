@@ -4,13 +4,16 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npm install -g @aws-amplify/cli
+        - amplify pull --yes --env $(AMPLIFY_ENV) --appId $(AMPLIFY_APP_ID)
     build:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: dist  # <- IMPORTANT: Vite outputs to /dist
+    baseDirectory: dist
     files:
       - '**/*'
   cache:
     paths:
       - node_modules/**/*
+      - amplify/**/*
